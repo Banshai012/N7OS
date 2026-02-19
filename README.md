@@ -1,7 +1,7 @@
 # Projet développement d'un mini système d'exploitation pour PC x86
 
 ## Objectifs
-a
+
 Développer les éléments de base d'un système d'exploitation
 
 Ce que nous verrons :
