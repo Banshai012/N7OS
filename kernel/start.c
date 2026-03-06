@@ -7,7 +7,7 @@ void kernel_start(void)
 {
     init_console();
     setup_base(0 /* la memoire virtuelle n'est pas encore definie */);
-    printf("abcdefghijklmnopqrstuvwxyz");
+    printf("blablabla\nblebleble\tbliblibli\bblobloblo\rblu\fblyblybly");
 
     // lancement des interruptions
     sti();
