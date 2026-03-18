@@ -8,11 +8,35 @@
 #include <inttypes.h>
 
 /**
- * @brief Description d'une ligne de la table de page
+ * @brief Description d'une ligne du répertoire de pages
  * 
  */
 typedef struct {
-    // a completer
+    uint32_t P : 1;
+    uint32_t W : 1;
+    uint32_t U : 1;
+    uint32_t R : 9;
+    uint32_t PAGE : 20;
+} page_repertory_entry_t;
+
+/**
+ * @brief Union pour manipuler facilement l'entrée du répertoire (PDE)
+ */
+typedef union {
+    page_repertory_entry_t dir_entry;
+    uint32_t value;
+} PDE; // PDE = Page Directory Entry
+
+typedef struct {
+    uint32_t P : 1;
+    uint32_t W : 1;
+    uint32_t U : 1; 
+    uint32_t RSVD1 : 2;
+    uint32_t A : 1;
+    uint32_t D : 1;
+    uint32_t RSVD2 : 2;
+    uint32_t AVAIL : 3;
+    uint32_t PAGE : 20;
 } page_table_entry_t;
 
 /**
