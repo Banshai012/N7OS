@@ -3,7 +3,7 @@
 
 PDE *page_directory = NULL;
 
-void initialise_paging() {
+PDE* initialise_paging() {
     page_directory= (PDE *) kmalloc_a(sizeof(PDE) * 1024);
     for (size_t i = 0; i < 1024; i++) {
         page_directory[i].dir_entry.P = 1;
@@ -21,6 +21,7 @@ void initialise_paging() {
     cr0 |= 0x1F;
     __asm__ __volatile__("mov %0, %%cr0":: "r"(cr0));
 
+    return page_directory;
 }
 
 PageTable alloc_page_entry(uint32_t address, int is_writeable, int is_kernel) {

@@ -59,7 +59,7 @@ typedef PTE * PageTable;
  *        et active la pagination
  * 
  */
-void initialise_paging();
+PDE* initialise_paging();
 
 /**
  * @brief Cette fonction alloue une page de la mémoire physique à une adresse de la mémoire virtuelle
