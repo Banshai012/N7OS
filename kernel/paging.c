@@ -1,9 +1,11 @@
 #include <n7OS/paging.h>
 #include <stddef.h> // nécessaire pour NULL
+#include <n7OS/mem.h>
 
 PDE *page_directory = NULL;
 
 PDE* initialise_paging() {
+    init_mem();
     page_directory= (PDE *) kmalloc_a(sizeof(PDE) * 1024);
     for (size_t i = 0; i < 1024; i++) {
         page_directory[i].dir_entry.P = 1;
