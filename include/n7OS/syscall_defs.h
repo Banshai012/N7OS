@@ -7,7 +7,7 @@ int sys_example();
 
 int sys_shutdown();
 
-int sys_write(const char *s, int len);
+int sys_write();
 
 typedef int (*fn_ptr)();
 extern fn_ptr syscall_table[NB_SYSCALL];

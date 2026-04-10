@@ -51,7 +51,7 @@ return __res;\
 
 int example();
 
-int shutdown();
+int shutdown(int n);
 
 int write(const char *s, int len);
 

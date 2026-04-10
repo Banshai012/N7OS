@@ -54,7 +54,7 @@
  * have to implement it in the kernel.
  */
 //extern void console_putbytes(const char *s, int len);
-extern void sys_write(const char *s, int len);
+extern int sys_write(const char *s, int len);
 /* This version of printf is implemented in terms of putchar and puts.  */
 
 #define	PRINTF_BUFMAX	128
