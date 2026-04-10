@@ -1,5 +1,6 @@
 #include <n7OS/console.h>
 #include <n7OS/cpu.h>
+#include <n7OS/time.h>
 
 uint16_t *scr_tab;
 
@@ -49,4 +50,17 @@ void console_putbytes(const char *s, int len) {
     for (int i= 0; i<len; i++) {
         console_putchar(s[i]);
     }
+}
+
+void console_put_time(time_t time)
+{
+    int pos = VGA_WIDTH ;
+    scr_tab[pos-8] = CHAR_COLOR << 8 | ('0' + time.hours / 10);
+    scr_tab[pos-7] = CHAR_COLOR << 8 | ('0' + time.hours % 10);
+    scr_tab[pos-6] = CHAR_COLOR << 8 | ':';
+    scr_tab[pos-5] = CHAR_COLOR << 8 | ('0' + time.minutes / 10);
+    scr_tab[pos-4] = CHAR_COLOR << 8 | ('0' + time.minutes % 10);
+    scr_tab[pos-3] = CHAR_COLOR << 8 | ':';
+    scr_tab[pos-2] = CHAR_COLOR << 8 | ('0' + time.seconds / 10);
+    scr_tab[pos-1] = CHAR_COLOR << 8 | ('0' + time.seconds % 10);
 }

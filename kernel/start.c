@@ -4,18 +4,18 @@
 #include <n7OS/console.h>
 #include <n7OS/paging.h>
 #include <n7OS/kheap.h>
+#include <n7OS/time.h>
+#include <unistd.h>
 
 void kernel_start(void)
 {
     init_console();
     initialise_paging();
-    printf("blablabla\nblebleble\tbliblibli\bblobloblo\rblu\fblyblybly");
 
     // lancement des interruptions
+    init_irq();
     sti();
-    //alloc_page_entry(0xA0000000, 1, 1);
-    uint32_t *ptr = (uint32_t*) 0xA0000000;
-    (*ptr)++;
+    init_timer();
 
     // on ne doit jamais sortir de kernel_start
     while (1) {

@@ -1,10 +1,8 @@
 #include "n7OS/paging.h"
-#include "n7OS/kheap.h"
 
 PageDirectory pageDirectory;
 
-void setPageEntry(PTE *page_table_entry, uint32_t new_page, int is_writeable, int is_kernel)
-{
+void setPageEntry(PTE *page_table_entry, uint32_t new_page, int is_writeable, int is_kernel) {
     page_table_entry->page_entry.present = 1;
     page_table_entry->page_entry.accessed = 0;
     page_table_entry->page_entry.dirty = 0;
@@ -13,8 +11,7 @@ void setPageEntry(PTE *page_table_entry, uint32_t new_page, int is_writeable, in
     page_table_entry->page_entry.page = new_page >> 12;
 }
 
-void initialise_paging()
-{
+void initialise_paging() {
 
     kheap_init();
 
@@ -52,8 +49,7 @@ void initialise_paging()
     // setup_base((uint32_t) 0);
 }
 
-PageTable alloc_page_entry(uint32_t address, int is_writeable, int is_kernel)
-{
+PageTable alloc_page_entry(uint32_t address, int is_writeable, int is_kernel) {
     // address = adresse virtuelle à allouer
     // address = idx_PDE | idx_PTE | offset
     //             10    |    10   |   12
@@ -80,17 +76,10 @@ PageTable alloc_page_entry(uint32_t address, int is_writeable, int is_kernel)
     return page_table;
 }
 
-void enablePaging()
-{
+void enablePaging() {
     __asm__ __volatile__("mov %0, %%cr3" ::"r"(pageDirectory));
     uint32_t cr0;
     __asm__ __volatile__("mov %%cr0, %0" : "=r"(cr0));
     cr0 |= 0x80000000;
     __asm__ __volatile__("mov %0, %%cr0" ::"r"(cr0));
 }
-
-/*
-void loadPageDirectory(unsigned int* dir) {
-    __asm__ __volatile__("mov %0, %%cr3":: "r"(dir));
-}
-*/
