@@ -7,15 +7,13 @@
 
 void kernel_start(void)
 {
-    kheap_init();
     init_console();
-    PDE* dir = initialise_paging();
-    setup_base(dir /* la memoire virtuelle n'est pas encore definie */);
+    initialise_paging();
     printf("blablabla\nblebleble\tbliblibli\bblobloblo\rblu\fblyblybly");
 
     // lancement des interruptions
     sti();
-    alloc_page_entry(0xA0000000, 1, 1);
+    //alloc_page_entry(0xA0000000, 1, 1);
     uint32_t *ptr = (uint32_t*) 0xA0000000;
     (*ptr)++;
 
