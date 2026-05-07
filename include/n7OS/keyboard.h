@@ -293,4 +293,8 @@ void init_keyboard();
 // Keyboard get character function
 char kgetch();
 
+void keyboard_IT_handler();
+
+void acquitter_IRQ();
+
 #endif
