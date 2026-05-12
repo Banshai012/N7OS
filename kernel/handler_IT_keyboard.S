@@ -1,8 +1,8 @@
 .text
 # cette directive sert a rendre l'etiquette publique
-    .globl keyboard_IT_handler
+    .globl handler_IT_keyboard
 # debut du traitant
-keyboard_IT_handler:
+handler_IT_keyboard:
 # sauvegarde des registres importants
     pushl %eax
     pushl %edx

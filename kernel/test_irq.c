@@ -23,5 +23,5 @@ void handler_time() {
 }
 
 void handler_keyboard() {
-    keyboard_IT_handler()
+    keyboard_IT_handler();
 }

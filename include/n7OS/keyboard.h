@@ -2,6 +2,7 @@
 #define _KEYBOARD_H
 
 #include <inttypes.h>
+#include <n7OS/cpu.h>
 
 // Keyboard ports
 #define KEYB_ENCODER        0x60 
@@ -295,6 +296,6 @@ char kgetch();
 
 void keyboard_IT_handler();
 
-void acquitter_IRQ();
+void acquitter_IRQ_Keyboard();
 
 #endif

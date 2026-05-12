@@ -5,6 +5,7 @@
 #include <n7OS/paging.h>
 #include <n7OS/kheap.h>
 #include <n7OS/time.h>
+#include <n7OS/keyboard.h>
 #include <n7OS/sys.h>
 #include <unistd.h>
 
@@ -17,10 +18,13 @@ void kernel_start(void)
     init_irq();
     sti();
     init_timer();
+    init_keyboard();
     init_syscall();
 
     // on ne doit jamais sortir de kernel_start
     while (1) {
+        char c = kgetch();
+        console_putchar(c);
         // cette fonction arrete le processeur
         hlt();
     }
