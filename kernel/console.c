@@ -31,6 +31,7 @@ void console_putchar(const char c) {
             pos++;
             console_putcursor(pos);
     } else if (c == 8) {
+        scr_tab[pos-1] = CHAR_COLOR<<8|' ';
         console_putcursor(pos-1);
     } else if (c == 9) {
         console_putcursor(pos+8);

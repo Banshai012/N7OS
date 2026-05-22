@@ -21,6 +21,8 @@ void timer_IT_handler();
 
 time_t time_converter(int time);
 
+int get_time();
+
 void masquer_IRQ();
 
 void demasquer_IRQ();

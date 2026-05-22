@@ -1,5 +1,6 @@
 #include "n7OS/console.h"
 #include "n7OS/time.h"
+#include "n7OS/processus.h"
 
 int tps = 0;
 
@@ -17,8 +18,12 @@ void timer_IT_handler() {
     acquitter_IRQ();
     tps++;
     if (tps % HORLOGE == 0) {
-        console_put_time(time_converter(tps));
-    }
+        time_t t = time_converter(tps);
+        console_put_time(t);
+        if ((t.seconds % 5) == 0) {
+            scheduler();
+        }
+	}
 }
 
 time_t time_converter(int time) {
@@ -27,6 +32,10 @@ time_t time_converter(int time) {
     time_conv.minutes = (time % 3600000) / 60000;
     time_conv.seconds = (time % 60000) / 1000;
     return time_conv;
+}
+
+int get_time() {
+    return tps;
 }
 
 void masquer_IRQ() {

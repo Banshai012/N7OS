@@ -10,7 +10,7 @@ void init_keyboard() {
 }
 
 void buffer_put(char c) {
-    if (((queue+1)%256)>((tete+1)%256)){
+    if (((queue+1)%256)!=((tete+1)%256)){
     } else {
         kbd_buffer[queue]=c;
         queue+=1;
