@@ -4,6 +4,7 @@
 
 uint32_t free_processus_bitmap_table[NB_PROC_MAX/32];
 process_t free_processus_table[NB_PROC_MAX];
+// La free_processus_table est la table des processus. La fonction fork est une fonction classique de fork (obtient le parent depuis le processus en cours)
 
 extern void ctx_sw(void *ctx_old, void *ctx_nex);
 extern void idle();
@@ -79,9 +80,10 @@ process_id fork(const char *name, fnptr function) {
 }
 
 int sleep(int seconds) {
-    int t = get_time();
-    while (seconds - ((t % 60000) / 1000) >= 0) {
-        t = get_time();
+    int t1 = get_time();
+    int t2 = get_time();
+    while (seconds - (((t2 % 60000) / 1000) - (t1 % 60000) / 1000) >= 0) {
+        t2 = get_time();
     }
     return 1;
 }
@@ -117,12 +119,32 @@ void start_process(process_id pidx) {
     free_processus_table[pidx].state = ELU;
 }
 
+// La fonction kill
+void kill() {
+    uint32_t pid = get_pid_elu();
+	for (int32_t idx = 0; idx < NB_PROC_MAX; idx++) {
+        uint32_t new_pid = (pid + idx) % NB_PROC_MAX;
+		if (get_pid(new_pid) && free_processus_table[new_pid].state == PRET) {
+            printf("killer en action\n");
+            block_process(pid);
+			start_process(new_pid);
+
+			// printf("Switching to process %d : %s\n", new_pid, process_table[new_pid].name);
+			sti();
+            free((void *)free_processus_table[pid].stack);
+	        clear_pid(pid);
+            ctx_sw(free_processus_table[pid].regs, free_processus_table[new_pid].regs);
+			return;
+		}
+	}
+}
+
 void scheduler() {
     uint32_t pid = get_pid_elu();
 	for (int32_t idx = 0; idx < NB_PROC_MAX; idx++) {
         uint32_t new_pid = (pid + idx) % NB_PROC_MAX;
 		if (get_pid(new_pid) && free_processus_table[new_pid].state == PRET) {
-            printf("scheduler en action");
+            printf("scheduler en action\n");
 			stop_process(pid);
 			start_process(new_pid);
 
@@ -140,6 +162,6 @@ void init_process() {
         free_processus_bitmap_table[i] = 0;
     }
     free_processus_table[spawn("idle", *idle)].state = ELU;
-    free_processus_table[spawn("fork2", *fork2)].state = PRET;
+    free_processus_table[fork("fork2", *fork2)].state = PRET;
     idle();
 }

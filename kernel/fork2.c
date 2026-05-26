@@ -8,5 +8,6 @@ void fork2() {
   printf("Hello, world from fork2\n");
   sleep(12);
   printf("Hello, world from fork3\n");
+  kill();
   for (;;);
 }

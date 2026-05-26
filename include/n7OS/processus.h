@@ -48,6 +48,8 @@ void stop_process(process_id pidx);
 
 void start_process(process_id pidx);
 
+void kill();
+
 void scheduler();
 
 void init_process();
